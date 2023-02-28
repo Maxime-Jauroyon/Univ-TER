@@ -1,15 +1,19 @@
-# gasp2
+# TER
 
-gasp2 is a pushdown automaton interpreter.
+The goal of the TER is to parse a data file of reactions (and inhibitions)
+and construct a graph (Nodes: reactions, Edges: molecules relations)
+in order to give only the reactions who can be used for a path between 2 molecules.
+
 
 ## Features
 
-- Parses two types of file:
-	- A list of automaton transitions.
-	- A programming-ish coding syntax.
-- Prints back a parsed file with a well formatted look.
-- Checks if an automaton is deterministic.
-- Interprets an automaton with a specific input.
+- Parses one type of file:
+	- A list of reactions and inhibitions.
+- Print the input document (without commentary and empty lines)
+- Print the list of reactions and inhibitors linked to their reactions
+- Specify the length of the path to find (will return the corresponding list of reactions)
+- Display the program's version
+- Specify the output file (default: stdout)
 
 ## Compile And Run
 
@@ -20,17 +24,11 @@ The project uses dune as a cross-platform build system.
 
 ## Contributors
 
-### [JAUROYON Maxime](https://gaufre.informatique.univ-paris-diderot.fr/jauroyon)
+### [JAUROYON Maxime](https://github.com/Maxime-Jauroyon)
 
-- Initial development of each phases.
-- Added the option system.
-- Added more examples to demonstrate the program's capabilities.
-
-### [KINDEL Hugo](https://gaufre.informatique.univ-paris-diderot.fr/hugokindel)
-
-- Refactored each phases and simplified the parser.
-- Separated the code in multiple files within a dune project.
-- Added README.md
+- used [gasp2 project](https://github.com/Maxime-Jauroyon/Univ-Gasp2) as a baseline
+- refactor syntactic and lexical parser to match the data given (brenda.ssa)
+- refactor the rest of the project to search a path in a graph 
 
 ## License
 
