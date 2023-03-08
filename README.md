@@ -11,7 +11,7 @@ in order to give only the reactions who can be used for a path between 2 molecul
 	- A list of reactions and inhibitions.
 - Print the input document (without commentary and empty lines)
 - Print the list of reactions and inhibitors linked to their reactions
-- Specify the length of the path to find (will return the corresponding list of reactions)
+- Specify the length of the path to find, up to 6 (will return the corresponding list of reactions)
 - Display the program's version
 - Specify the output file (default: stdout)
 

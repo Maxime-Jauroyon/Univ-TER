@@ -1,1 +1,0 @@
-alcohol_dehydrogenase : "Ethanol", "NAD+" -> "ethanal", "NADH" | 910 uM, 1.3 mM - 365; | in_edges : [1 ] | out_edges : [1 ] | start : true | end : true

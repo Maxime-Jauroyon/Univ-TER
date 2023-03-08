@@ -28,7 +28,7 @@ non_nullable_reaction_list:
 
 reaction:
   | i=ID PONCTUATOR_COLON l1=non_nullable_mol_list PONCTUATOR_ARROW l2=non_nullable_mol_list PONCTUATOR_SEPARATOR c=non_nullable_conc_list PONCTUATOR_DASH v=VALUE PONCTUATOR_SEMICOLON { Atypes.reac_table_length := !Atypes.reac_table_length + 1; Reaction(i,l1,l2,c,v) }
-  | i1=ID PONCTUATOR_COLON i2=ID PONCTUATOR_SEPARATOR v=VALUE u=UNIT PONCTUATOR_SEMICOLON { Atypes.inhib_table_length := !Atypes.inhib_table_length + 1; Inhibitor(i1,i2,v,u) }
+  | i1=ID PONCTUATOR_COLON i2=ID PONCTUATOR_SEPARATOR v=VALUE u=UNIT PONCTUATOR_SEMICOLON { Inhibitor(i1,i2,v,u) }
 
 non_nullable_mol_list:
   | i=ID { NonNullableMol(i) }

@@ -1,6 +1,7 @@
 open Printf
 open Atypes
 
+(* print the document from the automata *)
 let print_automata (a: automata) (print: bool) (print_transitions: bool) ?(oc = stdout) will_outpout_to_file : unit =
   if print then
     if will_outpout_to_file then
@@ -16,6 +17,7 @@ let print_automata (a: automata) (print: bool) (print_transitions: bool) ?(oc = 
           printf "\n\n"
       end
 
+(* print the document from the tables *)
 let print_tables rt it (print: bool) (interpret_word: bool) ?(oc = stdout) will_outpout_to_file: unit =
   if print then
     if will_outpout_to_file then

@@ -1,10 +1,12 @@
 open Atypes
 
+(* lex and parse the file *)
 let parse_automata (filename: string): automata =
   let lexbuf = Lexing.from_channel (open_in filename) in
   Aparser.automata Alexer.main lexbuf
 
 
+(* check if the automata is interpretable *)
 let automata_is_interpretable (a: automata): unit =
 
   let rec interpretibility_of_reaction r =
@@ -12,6 +14,7 @@ let automata_is_interpretable (a: automata): unit =
     | Reaction(i,l1,l2,c,v) -> 
       let l1_length = length_of_non_nullable_mol_list l1  0 in
       let c_length = length_of_non_nullable_conc_list c 0 in
+      (* if we don't have the same number of substrat and concentration it's not conform to the format *)
       if l1_length != c_length then
         let err = "this reaction isn't interpretable :\n" ^ (Astring.string_of_reaction r) ^ "\n" in
         failwith err
