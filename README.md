@@ -14,6 +14,7 @@ in order to give only the reactions who can be used for a path between 2 molecul
 - Specify the length of the path to find, up to 6 (will return the corresponding list of reactions)
 - Display the program's version
 - Specify the output file (default: stdout)
+- Can choose to discard inhibitors in the searching process
 
 ## Compile And Run
 
