@@ -134,6 +134,23 @@ let rec initialize_start_end ?(iteration = 0) rt ?(start_list=[]) ?(end_list=[])
 let search_path rt it w_start w_end start_list end_list len =
 
   (* following functions are going to be used for the different searching path algorithms *)
+  
+  (* get rid of those who consum w_start *)
+  (* l : list of nodes to check *)
+  (* output : list of nodes from l that don't consum w_start *)
+  let rec check_being_start l =
+    match l with
+    | [] -> []
+    | h::t -> 
+      let actual_v = Array.get rt h in
+      match actual_v with
+      | None -> failwith "error in search_path"
+      | Some(n) -> 
+        let (_,_,s,_,_,_) = n in
+        if (List.mem (Atypes.get_index w_start) s) then
+          check_being_start t
+        else
+          h :: (check_being_start t) in
 
   (* get rid of those who produce w_end *)
   (* l : list of nodes to check *)
@@ -231,12 +248,6 @@ let search_path rt it w_start w_end start_list end_list len =
 
 
 
-
-
-
-
-
-
           
 
 
@@ -301,6 +312,8 @@ let search_path rt it w_start w_end start_list end_list len =
           if (((check_start_end [h]) == []) || ((check_being_end [h]) == [])) then
             find_index_2 t l2
           else
+            (* get rid of those who consum w_start *)
+            let neighbors_index_list = check_being_start neighbors_index_list in
             (* get rid of neighbors (end nodes) who produce w_start or consum w_end *)
             let neighbors_index_list = check_start_end neighbors_index_list in
             if (neighbors_index_list == []) then
@@ -386,6 +399,8 @@ let search_path rt it w_start w_end start_list end_list len =
           if (((check_start_end [h]) == []) || ((check_being_end [h]) == [])) then
             find_index_3 t l2 li lp l2_is_end
           else
+            (* get rid of nodes who consum w_start *)
+            let neighbors_index_list = check_being_start neighbors_index_list in
             (* get rid of nodes who produce w_start or consum w_end *)
             let neighbors_index_list = check_start_end neighbors_index_list in
             (* get rid of nodes who produce w_end *)
@@ -418,8 +433,10 @@ let search_path rt it w_start w_end start_list end_list len =
                         let (_,i,_,p,_,_) = n in
                         (* check if h1 isn't a node that we discard previously *)
                         if (List.mem h1 l1) then
+                          (*get rid of nodes who consum w_start *)
+                          let new_h2 = check_being_start h2 in
                           (* get rid of nodes who produce w_start or consum w_end *)
-                          let new_h2 = check_start_end h2 in
+                          let new_h2 = check_start_end new_h2 in
                           if (new_h2 == []) then
                             join_with_ends is ps l1 t l2_is_end
                           else
@@ -445,6 +462,7 @@ let search_path rt it w_start w_end start_list end_list len =
                           join_with_ends is ps l1 t l2_is_end in
                   (* final list of reactions that participate in a path from this start node *)
                   let neighbors_index = join_with_ends (i::li) (p @ lp) neighbors_index_list neighbors_index_edges l2_is_end in
+                  (* printf "%s\n" (Astring.string_of_int_list neighbors_index); *)
                   if (neighbors_index == []) then
                     find_index_3 t l2 li lp l2_is_end
                   else
@@ -489,8 +507,9 @@ let search_path rt it w_start w_end start_list end_list len =
           find_index_4 l1 t l2_is_end
         else
           (* check if end node produce w_start or consum w_end
-          OR check if end node produce an inhibitor of himself (very unlikely) *)
-          if (((check_start_end [h]) == []) || ((check_inhib_by_itself_or_others [h] []) == []))then
+          OR check if end node produce an inhibitor of himself (very unlikely) 
+          OR check if end node consum w_start *)
+          if (((check_start_end [h]) == []) || ((check_inhib_by_itself_or_others [h] []) == []) || ((check_being_start [h]) == []))then
             find_index_4 l1 t l2_is_end
           else
             (* get the reactions from path start to in_edges conform with the end node *)
@@ -536,8 +555,9 @@ let search_path rt it w_start w_end start_list end_list len =
           find_index_5 l1 t l2_is_end
         else
           (* check if end node produce w_start or consum w_end
-          OR check if end node produce an inhibitor of himself (very unlikely) *)
-          if (((check_start_end [h]) == []) || ((check_inhib_by_itself_or_others [h] []) == []))then
+          OR check if end node produce an inhibitor of himself (very unlikely)
+          OR check if end node consum w_start *)
+          if (((check_start_end [h]) == []) || ((check_inhib_by_itself_or_others [h] []) == []) || ((check_being_start [h]) == []))then
             find_index_5 l1 t l2_is_end
           else
             (* get the reactions from path start to in_edges conform with the end node *)
@@ -582,8 +602,9 @@ let search_path rt it w_start w_end start_list end_list len =
           find_index_6 l1 t
         else
           (* check if end node produce w_start or consum w_end
-          OR check if end node produce an inhibitor of himself (very unlikely) *)
-          if (((check_start_end [h]) == []) || ((check_inhib_by_itself_or_others [h] []) == []))then
+          OR check if end node produce an inhibitor of himself (very unlikely)
+          OR check if end node consum w_start *)
+          if (((check_start_end [h]) == []) || ((check_inhib_by_itself_or_others [h] []) == []) || ((check_being_start [h]) == []))then
             find_index_6 l1 t
           else
             (* get the reactions from path start to in_edges conform with the end node *)
