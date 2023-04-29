@@ -23,6 +23,31 @@ The project uses dune as a cross-platform build system.
 - Open a terminal in the project's root directory.
 - Run `./automata`, the project should compile and run automatically.
 
+## Architecture
+
+Tree of the most important files and folder in the project's repository hierarchy (not everything is shown):
+
+```
+/
+├─┬─src/: Sources code.  
+│ └─┬─ainterpreter.ml/: Graph path finding algorithms.
+│   ├─alexer.mll/: Lexing.
+│   ├─aparser.mly/: Parsing.
+│   ├─aprint.ml/: Printing functions.
+│   ├─astring.ml/: ToString functions.
+│   ├─atransitions.ml/: Transition to a graph functions.
+│   ├─atypes.ml/: Types and global variables.
+│   ├─autil.ml/: Utility functions.
+│   ├─automata.ml/: The program.
+│   └─*.*: Other files.
+├─┬─tests/:
+│ └───*.*: test files.
+├─automata: The executable.
+├─README.md: This file.
+├─brenda.ssa: Data file.
+└─*.*: Other files.
+```
+
 ## Contributors
 
 ### [JAUROYON Maxime](https://github.com/Maxime-Jauroyon)
